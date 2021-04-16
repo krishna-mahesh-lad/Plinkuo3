@@ -9,7 +9,8 @@ var stand1,stand2;
 var polygon;
 var slingShot;
 var polygon_img, backgroundImg;
-var score=0;
+var gameState = "onSling";
+var score = 0;
 var bg = "images/light.jpg";
 function preload(){
   getBackgroundImage();
@@ -20,7 +21,6 @@ function setup() {
   createCanvas(900,400);
   engine = Engine.create();
   world = engine.world;
-  Engine.run(engine);
   ground = new Ground();
   stand1 = new Stand(390,300,250,10);
   stand2 = new Stand(700,200,200,10);
@@ -72,7 +72,9 @@ function draw() {
   //background(56,44,44); 
   if(backgroundImg)
     background(backgroundImg);
-  //Engine.update(engine);
+    else
+    background("blue");
+  Engine.update(engine);
   
   textSize(20);
   fill("lightyellow");
@@ -150,14 +152,23 @@ function draw() {
   blocks9.score();
 }
 function mouseDragged(){
-  Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
+  if (gameState !== "launched") {
+    Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
+    //Matter.Body.applyForce(this.polygon, this.polygon.position, {x:5, y:-5})
+  }
+
+  return false;
+
 }
 function mouseReleased(){
   slingShot.fly();
+  gameState = "launched";
 }
 function keyPressed(){
   if(keyCode === 32){
       slingShot.attach(this.polygon);
+      Matter.Body.setPosition(this.polygon,{x:50,y:200});
+      gameState = "onSling";
   }
 }
 async function getBackgroundImage(){
