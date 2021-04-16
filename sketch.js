@@ -11,10 +11,10 @@ var slingShot;
 var polygon_img, backgroundImg;
 var gameState = "onSling";
 var score = 0;
-var bg = "images/light.jpg";
+var bg = "light.jpg";
 function preload(){
   getBackgroundImage();
-  polygon_img=loadImage("images/polygon.png");
+  polygon_img=loadImage("polygon.png");
   
 }
 function setup() {
@@ -180,9 +180,9 @@ async function getBackgroundImage(){
    //console.log(hour);
 
    if (hour >= 06 && hour <= 18) {
-     bg = "images/day.jpg";
+     bg = "day.jpg";
    } else {
-     bg = "images/darknight.png";
+     bg = "darknight.png";
    }
 
    backgroundImg = loadImage(bg);
